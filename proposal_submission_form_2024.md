@@ -1,10 +1,10 @@
 ### 2024 BIG DATA HACKATHON PROPOSAL FORM
 
-#### Team Number: `YOUR TEAM NUMBER HERE`  
+#### Team Number: 109 
 
-#### Team Name: `YOUR TEAM NAME HERE`    
+#### Team Name: The Jams    
   
-#### Your teamâ€™s hackathon idea in One sentence:
+#### Your team's hackathon idea in One sentence:
 ##### `YOUR ONE SENTENCE HERE`
 
 
@@ -13,7 +13,7 @@
 <img height="10%" width="50%" alt="HDMA" src="https://github.com/BigDataForSanDiego/bigdataforsandiego.github.io/blob/main/templates/img/hdma2.png?raw=true"> 
 
 <!--
-#### Theme: Enhancing Healthcareâ€™s Digital Front Door
+#### Theme: Enhancing Healthcare's Digital Front Door
 #### - Digital solutions to help increase access, manage health, and improve patient satisfaction along the healthcare journey -  
 -->
 
@@ -40,7 +40,11 @@
 > How can we leverage big (geospatial) data analytics and AI to improve access to resources that mitigate the impact of environmental factors, i.e. pollution, on health disparities?
 
 
-#### Team Coordinator GitHub Username: `YOUR TEAM COORDINATOR GITHUB USERNAME HERE`
+#### Team Coordinator GitHub Username: cristinadlt
 
-#### Team Members `YOUR TEAM MEMBERS NAME & GITHUB USERNAME HERE`
+#### Team Members:
+- Carmen Truong, carmnt
+- Cristina De La Torre, cristinadlt
+- Kathleen Nguyen, knguyen64
+- Sophia Fang, sophifang
 
