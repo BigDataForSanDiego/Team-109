@@ -1,13 +1,14 @@
 <script>
-  // Write your JS here, or import other files
+  import Gemini from './Gemini.svelte';
+
+  let data = {};
+  let error = null;
+  let loading = true;
 </script>
 
 <main>
-  <h1>Svelte template</h1>
-
-  <p>Write your HTML here</p>
+  <Gemini {data} {error} {loading}/>
 </main>
 
 <style>
-  /* Write your CSS here */
 </style>
