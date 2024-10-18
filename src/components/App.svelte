@@ -72,7 +72,7 @@
     <div class="journal-section">
       <h2>
         Daily Journal 
-        <img src="/path/to/icon.png" alt="Journal Icon" />
+        <!-- <img src="/path/to/icon.png" alt="Journal Icon" /> -->
       </h2>
       <!-- Blood Glucose Subsection -->
       <div class="subsection">
@@ -148,7 +148,7 @@
     <div class="calendar-section">
       <h2>
         Calendar 
-        <img src="/path/to/icon.png" alt="Calendar Icon" />
+        <!-- <img src="/path/to/icon.png" alt="Calendar Icon" /> -->
       </h2>
       <!-- Placeholder for calendar -->
       <div class="calendar">
