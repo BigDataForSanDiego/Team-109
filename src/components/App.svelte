@@ -120,13 +120,13 @@
         <h3>Symptoms</h3>
         <div class="symptoms-grid">
           {#each Object.keys(journalData.symptoms) as symptom}
-            <a
+            <button
               class="symptom-icon {journalData.symptoms[symptom] ? 'active' : ''}"
               on:click={() => toggleSymptom(symptom)}
               disabled={!isEditing}
             >
               <span>{symptom}</span>
-        </a>
+        </button>
           {/each}
         </div>
       </div>
@@ -154,12 +154,12 @@
       <div class="calendar">
         <!-- Calendar logic to show days and allow selecting a day -->
         {#each Array(30) as _, index}
-          <a
+          <button
             class="day {new Date().getDate() === index + 1 ? 'current-day' : ''}"
             on:click={() => changeJournalForDay(new Date().setDate(index + 1))}
           >
             {index + 1}
-      </a>
+      </button>
         {/each}
       </div>
     </div>
@@ -237,7 +237,7 @@
     color: white;
   }
   /* Save/Edit button */
-  button {
+  /* button {
     padding: 10px;
     font-size: 16px;
     background-color: #007bff;
@@ -245,5 +245,5 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+  } */
 </style>
