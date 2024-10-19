@@ -1,49 +1,46 @@
-### 2024 BIG DATA HACKATHON PROPOSAL FORM
+## GlucoLog: An AI-Powered Diabetic Health Journal 
+#### _Enhancing Healthcare's Digital Front Door: Digital solutions to help increase access, manage health, and improve patient satisfaction along the healthcare journey_ 
 
-#### Team Number: 109 
+### Problem Statement & Solution
+We believe that blood glucose is an important diabetes metric that remains relevant. We derive 3 key factors that make this metric impactful—a growing diabetes epidemic, the susceptibility of the elderly, and food insecurity in San Diego.
 
-#### Team Name: The Jams    
-  
-#### Your team's hackathon idea in One sentence:
-##### A journal that provides AI-powered health recommendations based on daily entries.
+These factors create barriers that together make navigating day-to-day health for those with type 2 diabetes difficult. We close the gap created by this through development of a tailored health experience that personalizes self-monitoring. 
 
+Thus, our solution addresses 2 CORE Themes:
+- **Access to Care**: How can we make it easier to access care (especially specialists) and provide clear, timely notifications, and reminders along their healthcare journey?
+- **Managing My Health**: It's easy to get overwhelmed by all the tasks patients often have to do to maintain their health, how can we make managing health more enjoyable?
 
-#### A visual
-<img height="10%" width="50%" alt="wireframe of journal idea" src="example visuals.png"> 
+### What is GlucoLog?
+GlucoLog is a mobile personal health journal supplemented by AI-powered health information based on daily blood sugar levels and meal entries, delivering an enhanced patient experience. 
 
-<!--
-#### Theme: Enhancing Healthcare's Digital Front Door
-#### - Digital solutions to help increase access, manage health, and improve patient satisfaction along the healthcare journey -  
--->
+Our app’s principal features include:
+1. Daily health journal entries with contextualizing AI-powered information 
+2. Ability to monitor blood glucose levels, nutrition, symptoms, and add patient additional notes  
+3. Easy access to a history of logged daily journal records at a calendar’s view 
 
-#### Hackathon Five CORE Themes. `CHECK ONE or TWO QUESTIONS (insert X in [ ])`.
-- [x] Access to care
-> How can we make it easier to access care (especially specialists) and provide clear, timely notifications, and reminders along their healthcare journey?
-- [ ] Patient satisfaction
-> How can we make it more convenient for patients to provide real-time feedback about their healthcare experience through a mobile app?
-- [ ] New patient experience
-> As a potential new customer, how can we leverage the mobile app to help new patients better understand what services are available to them?
-- [X] Managing my health
-> It's easy to get overwhelmed by all the tasks patients often have to do to maintain their health, how can we make managing health more enjoyable?
-- [ ] Addressing mental health challenges
-> Mental health challenges may be difficult to identify and have a broad impact on health, how can we help clinicians be more in tune with patients mental health needs?
+### Deliverables
+We implement these features through our <a href= "https://dailyglucosejournal.netlify.app/"> website</a>, coded in HTML, CSS, and the JavaScript web framework Svelte. We made use of Google’s Gemini API to power supplementary AI information within daily journal entries. For more insight into our app and its features feel free to check out our 20+ screen interactive prototype designed in <a href= "https://dailyglucosejournal.netlify.app/"> Figma</a>. 
 
-#### Optional Questions. `TEAMS CAN SELECT ONE ADDITIONAL OPTIONAL QUESTION (insert X in [ ])`
-- [ ] Cultural Competence in Healthcare
-> How can we design a mobile app that helps healthcare providers better understand and respect cultural differences, improving communication and care for diverse patient populations?
-- [ ] Access to Care for Rural and Remote Communities
-> How can we leverage technology to improve healthcare access for rural and remote communities, ensuring timely and specialized care for those in underserved areas? (Focus on SDSU Imperial Valley Connection - Rural/Remote)
-- [X] Enhancing disease prevention (For Geocomputational Thinker Awards)
-> How can big (geospatial) data analytics and AI be used to improve access to information about the influence of human behavior, cultural practices, and social interactions on the spread of diseases?
-- [ ] Addressing environmental health disparities (For Geocomputational Thinker Awards)
-> How can we leverage big (geospatial) data analytics and AI to improve access to resources that mitigate the impact of environmental factors, i.e. pollution, on health disparities?
+### Sources 
+We utilized the following sources when researching diabetes, blood sugar levels, monitoring, and more:
+- <a href= "https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/dips/Diabetes_Slide%20Set_08.22.pdf"> https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/dips/Diabetes_Slide%20Set_08.22.pdf </a>
+- <a href= "https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf"> https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf </a>
+- <a href= "https://www.sharp.com/health-news/what-you-need-to-know-about-diabetes"> https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf</a>
+- <a href= "https://medlineplus.gov/bloodglucose.html"> https://medlineplus.gov/bloodglucose.html</a>
+- <a href= "https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html"> https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html</a>
+- <a href= "https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html"> https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html</a>
+- <a href= "https://reports.mysidewalk.com/a664f35049"> https://reports.mysidewalk.com/a664f35049</a>
 
+### What's next for GlucoLog
+In the future, we would like to extend our app’s features by providing an option to print entry history as a pdf for patients to take to their doctor appointments. We hope that through our app, patients will be empowered to confidently start communicating health results openly and further take ownership of their health journey.
 
-#### Team Coordinator GitHub Username: cristinadlt
+#### Team Coordinator: 
+Cristina De La Torre, `cristinadlt`
 
 #### Team Members:
-- Carmen Truong, carmnt
-- Cristina De La Torre, cristinadlt
-- Kathleen Nguyen, knguyen64
-- Sophia Fang, sophifang
+- Carmen Truong, `carmnt`
+- Kathleen Nguyen, `knguyen64`
+- Sophia Fang, `sophifang`
+
+
 
