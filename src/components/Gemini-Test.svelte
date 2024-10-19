@@ -48,7 +48,7 @@
     <div class="item2">
       <div id="ai-section-wrapper">
         <div id="ai-section">
-          <h2>Ai-Powered Research</h2>
+          <h2>AI-Powered Research</h2>
           {#if loading}
               Loading...
           {:else if error}

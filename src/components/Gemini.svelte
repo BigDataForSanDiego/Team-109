@@ -5,7 +5,7 @@
   
 <main>  
     <div class="ai-research"> 
-        <h2 class="title">Ai-Powered Research</h2>
+        <h2>AI-Powered Research</h2>
         <div class="gemini-wrapper">
             {#if loading}
                 Loading...
@@ -52,7 +52,7 @@
                 <p>No data available.</p>
             {/if}
         </div>
-        <div id="subtitle">This is meant to be purely informative. AI can make mistakes. Please check with your doctor always.</div>
+        <div id="subtitle">These statements are for informational purposes only and are not a substitute for professional medical advice. You should always consult your doctor or other qualified healthcare provider with any questions you may have regarding a medical condition, procedure, or treatment.</div>
     </div>
 </main>
   
@@ -68,6 +68,14 @@
     overflow-y: auto;
     /* overflow: hidden; */
     height: 100%;
+  }
+  h2{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
   }
 
   #response-box{
@@ -92,16 +100,17 @@
 
   #subtitle{
     margin-top: 5px;
-    font-size: 15px;
+    font-size: 10px;
+    text-align: center;
   }
 
-  .title{
+  /* .title{
     margin-top: 0;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
-  }
+  } */
 
 
   @keyframes fadeIn {

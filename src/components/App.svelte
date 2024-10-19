@@ -3,6 +3,7 @@
   import NavBar from './NavBar.svelte';
   import { onMount } from 'svelte';
   import { run, transformTextToHtml } from './gemini-server.js';
+  import jsPDF from 'jspdf';
 
   let data = {};
   let error = null;
@@ -15,6 +16,7 @@
   let foods = "";
   let readings = "";
   let day=new Date().getDate();
+  let monthName = new Date().toLocaleDateString('en-US', { month: 'long' });
 
   // Default data structure for user inputs
   let journalData = {
@@ -42,9 +44,9 @@
     isDisabled = true;
     loadData();
     
-    setTimeout(() => {
-        isEditing = true;
-    }, 10_000)
+    // setTimeout(() => {
+    //     isEditing = true;
+    // }, 10_000)
   }
   // Function to toggle edit mode
   function toggleEdit() {
@@ -78,6 +80,20 @@
   function toggleSymptom(symptom) {
     journalData.symptoms[symptom] = !journalData.symptoms[symptom];
   }
+
+  // Function to make calendar reflect the current month
+  function getDaysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate(); // Returns number of days in the given month
+  }
+
+  function renderCalendar() {
+    let currentMonth = selectedDate.getMonth();
+    let currentYear = selectedDate.getFullYear();
+    let daysInMonth = getDaysInMonth(currentYear, currentMonth);
+    
+    return Array.from({ length: daysInMonth }, (_, index) => index + 1);
+  }
+
   // Change the journal data based on the selected calendar day
   function changeJournalForDay(date) {
     selectedDate = date;
@@ -119,6 +135,60 @@
       loadData();
   });
 
+  // Function to export as PDF
+  function exportAsPDF() {
+    const doc = new jsPDF();
+
+    // Set font and title
+    doc.setFont("Montserrat", "bold");
+    doc.setFontSize(18);
+    doc.text("Daily Health Tracker", 10, 10);
+
+    // Add the date
+    doc.setFont("Montserrat", "normal");
+    doc.setFontSize(12);
+    doc.text(`Date: ${selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, 10, 20);
+
+    // Blood Glucose Section
+    doc.setFont("Montserrat", "bold");
+    doc.setFontSize(14);
+    doc.text("Blood Glucose Records:", 10, 30);
+    doc.setFont("Montserrat", "normal");
+    journalData.bloodGlucose.forEach((record, index) => {
+      doc.text(`Time: ${record.time}, Level: ${record.level} mg/dL`, 10, 40 + index * 10);
+    });
+
+    // Nutrition Section
+    doc.setFont("Montserrat", "bold");
+    doc.setFontSize(14);
+    doc.text("Nutrition Records:", 10, 70);
+    doc.setFont("Montserrat", "normal");
+    journalData.nutrition.forEach((food, index) => {
+      doc.text(`Food: ${food}`, 10, 80 + index * 10);
+    });
+
+    // Symptoms Section
+    doc.setFont("Montserrat", "bold");
+    doc.setFontSize(14);
+    doc.text("Symptoms:", 10, 110);
+    const symptomsList = Object.keys(journalData.symptoms).filter(symptom => journalData.symptoms[symptom]).join(', ');
+    doc.setFont("Montserrat", "normal");
+    doc.text(`Symptoms: ${symptomsList}`, 10, 120);
+
+    // Additional Notes Section
+    doc.setFont("Montserrat", "bold");
+    doc.setFontSize(14);
+    doc.text("Additional Notes:", 10, 140);
+    doc.setFont("Montserrat", "normal");
+    doc.text(journalData.additionalNotes, 10, 150);
+
+    // Save the PDF
+    doc.save("Health_Tracker.pdf");
+  }
+
+
+
+
 </script>
 
 <main>
@@ -128,14 +198,29 @@
       <div class="main-content">
         <!-- Left Section: Daily Journal -->
         <div class="journal-section">
-          <h2>
-            Daily Journal - {currentDate}
-            <!-- <img src="/path/to/icon.png" alt="Journal Icon" /> -->
-          </h2>
+          <div class = "top">
+            <h2>Daily Journal</h2>
+            {#if !isEditing}
+            <button class="export" on:click={exportAsPDF}>
+              Export as PDF
+            </button>
+            {/if}
+          </div>
+          <br>
+          <p style="margin-top: 0; font-weight: normal;">
+            📅 Today, {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
     
           <!-- Blood Glucose Subsection -->
           <div class="subsection">
-            <h3>Blood Glucose</h3>
+            <h3>
+              <img src="section-icons/glucometer.png" alt="icon" style="width: 40px; vertical-align: middle; margin-right: 8px;" />
+              Blood Glucose
+            </h3>
+            <div class="glucose-labels">
+              <span>Time</span>
+              <span>Level (mg/dL)</span>
+            </div>
             {#each journalData.bloodGlucose as record, index}
               <div class="record">
                 <input
@@ -163,11 +248,17 @@
                 {/if}
               </div>
             {/each}
+            {#if journalData.bloodGlucose.length === 0}
+              <p style="color: grey;">No records today</p>
+            {/if}
             <button class="add-button" on:click={addBloodGlucoseRecord} disabled={!isEditing}>+</button>
           </div>
           <!-- Nutrition Tracker Subsection -->
           <div class="subsection">
-            <h3>Nutrition Tracker</h3>
+            <h3>
+              <img src="section-icons/diet.png" alt="icon" style="width: 40px; vertical-align: middle; margin-right: 8px;" />
+              Nutrition Tracker
+            </h3>
             {#each journalData.nutrition as food, index}
               <div class="record">
                 <input
@@ -188,12 +279,19 @@
                 {/if}
               </div>
             {/each}
+            {#if journalData.nutrition.length === 0}
+              <p style="color: grey;">No records today</p>
+            {/if}
             <button class="add-button" on:click={addNutritionRecord} disabled={!isEditing}>+</button>
           </div>
     
           <!-- Symptoms Subsection -->
           <div class="subsection">
-            <h3>Symptoms</h3>
+            <h3>
+              <img src="section-icons/plan.png" alt="icon" style="width: 40px; vertical-align: middle; margin-right: 8px;" />
+              Symptoms
+            </h3>
+            Select the symptoms you are experiencing.
             <div class="symptoms-grid">
               {#each Object.keys(journalData.symptoms) as symptom}
                 <button
@@ -215,7 +313,10 @@
     
           <!-- Additional Notes Subsection -->
           <div class="subsection">
-            <h3>Additional Notes</h3>
+            <h3>
+              <img src="section-icons/clipboard.png" alt="icon" style="width: 40px; vertical-align: middle; margin-right: 8px;" />
+              Additional Notes
+            </h3>
             <textarea
               bind:value={journalData.additionalNotes}
               placeholder="Type any additional notes here."
@@ -227,8 +328,8 @@
           </div>
           
           <!-- Save/Edit Button -->
-          <button class="save" on:click={isEditing ? saveData : toggleEdit} disabled={!isEditing}>
-            Save
+          <button class="save" on:click={isEditing ? saveData : toggleEdit}>
+            {isEditing ? 'Save' : 'Edit'}
           </button>
         </div>
     
@@ -239,48 +340,24 @@
             <h2>
               Calendar 
               <!-- <img src="/path/to/icon.png" alt="Calendar Icon" /> -->
-            </h2>
-            <!-- Placeholder for calendar -->
+            </h2><br>
+            <div class="subsection">
+            <h3>{monthName}</h3>
             <div class="calendar">
-              <!-- Calendar logic to show days and allow selecting a day -->
+              <!-- Days of the week -->
               {#each ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as day, index}
-              <button
-                class="day {new Date().getDate() === index + 1 ? 'current-day' : ''}"
-                id="day-titles"
-                on:click={() => changeJournalForDay(new Date().setDate(index + 1))}
-              >
-                {day}
-              </button>
+                <button class="day-titles">{day}</button>
               {/each}
-              {#each [0, 0] as _, index}
-              <button
-                class="day {new Date().getDate() === index + 1 ? 'current-day' : ''}"
-                id="day-titles"
-                on:click={() => changeJournalForDay(new Date().setDate(index + 1))}
-              >
-              </button>
+            
+              <!-- Calendar days -->
+              {#each renderCalendar() as day}
+                <button class="day {day < new Date().getDate() ? 'past-day' : day === new Date().getDate() ? 'current-day' : 'future-day'}">
+                  {day}
+                </button>
               {/each}
-              {#each Array(day) as _, index}
-                <button
-                  id="days"
-                  class="day {new Date().getDate() === index + 1 ? 'current-day' : ''}"
-                  on:click={() => changeJournalForDay(new Date().setDate(index + 1))}
-                >
-                  {index + 1}
-              </button>
-              {/each}
-              {#each Array.from({ length: 31 - day + 1 }, (_, index) => day + 1 + index) as day_i, index}
-              <button
-                id="future-days"
-                class="day {new Date().getDate() === index + 1 ? 'current-day' : ''}"
-                on:click={() => changeJournalForDay(new Date().setDate(index + 1))}
-              >
-                  {day_i}
-              </button>
-            {/each}
             </div>
           </div>
-
+        </div>
           <!-- Right Section: Gemini -->
           <div class="gemini-section">
             <Gemini {data} {error} {loading}/>
@@ -299,10 +376,15 @@
     background-color: white;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 300;
+    font-weight: 400;
     font-style: normal;
   }
-
+  span{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
   .main-content-wrapper{
     padding: 20px;
     padding-top: 85px;
@@ -330,26 +412,44 @@
   }
   .subsection {
     margin-bottom: 40px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
   }
   .subsection h3 {
     margin-bottom: 10px;
   }
-
-  .add-button{
-    width: 50px;
-    border-radius: 10px;
-    background-color: white;
+  .calendar-section h3 {
+    text-align: center;
+  }
+  .add-button {
+  background-color: #fff; /* Blue color */
+  border: 1px solid #18808C;
+  color: #18808C;
+  width: 50px;
+  height: 30px;
+  border-radius: 25vh;
   }
 
   .add-button:hover{
-    background-color: rgb(192, 192, 192);
+    background-color: #18808C; /* Blue color */
+    border: 1px solid #18808C;
+    color: white;
   }
 
+  .add-button:disabled {
+    color: #788b8d;
+    background-color: rgb(231, 231, 231);
+    border: 1px solid rgb(231, 231, 231);
+    cursor: not-allowed;
+  }
 
+  input:disabled, button:disabled, textarea:disabled {
+    cursor: not-allowed;
+  }
   /* Right section: Calendar */
   .calendar-section {
     width: auto;
-    height: auto;
     padding: 20px;
     background-color: #EBF4F6;
     margin-bottom: 10px;
@@ -360,39 +460,42 @@
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
     width: 100%;
   }
   .day {
-    padding: 10px;
+    width: 40px;
+    height: 40px;
     text-align: center;
-    border: 0px solid #ccc;
-    border-radius: 100%;
+    border-radius: 50%; /* Makes the button circular */
     cursor: pointer;
     background-color: white;
+    display: inline-block;
+    border: 0px solid #ccc;
+    line-height: 40px; /* Centers text vertically */
   }
 
-  #day-titles{
+  .day-titles{
+    font-weight: 600;
+    background-color: transparent;
+    border: 0px solid #ccc;
+  }
+
+  .past-day {
     background-color: #EBF4F6;
+    color: black;
   }
 
-  #future-days{
-    background-color: #EBF4F6;
+  .current-day {
+    background-color: #18808C; /* Blue background */
+    color: white;
   }
 
-  @media (max-width: 600px) {
-    .calendar {
-      grid-template-columns: repeat(4, 1fr); /* 4 columns on small screens */
-    }
+  .future-day {
+    background-color: transparent;
+    color: black;
   }
 
-  /* For very small screens, below 400px */
-  @media (max-width: 400px) {
-    .calendar {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns on very small screens */
-    }
-  }
 
   .current-day {
     background-color: #18808C;
@@ -420,6 +523,9 @@
     .symptoms-grid {
       grid-template-columns: repeat(3, 1fr); /* 4 columns on small screens */
     }
+    .content {
+      background-color: #EBF4F6; /* Change background to blue */
+    }
   }
 
   .symptom-icon {
@@ -428,12 +534,12 @@
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
-    background-color: #EBF4F6;
+    background-color: #fff;
     /* max-width: 100px; */
   }
-  .symptom-icon.active {
+  /* .symptom-icon.active {
     background-color:#EBF4F6;
-  }
+  } */
 
   /* Additional Notes */
   #prompt{
@@ -453,15 +559,18 @@
   /* Save */
   .save{
     color: white;
-    width: 90px;
+    width: auto;
     height: 30px;
     border-radius: 25vh;
-    border: 0px;
+    border: 1px solid #18808C;
     background-color: #18808C;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .save:hover{
-    background-color: #0f6972;
+    background-color: white;
+    color: #0f6972;
   }
 
   .save:disabled{
@@ -469,11 +578,33 @@
     background-color: #788b8d;
   }
 
+  .export{
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    width: auto;
+    height: 30px;
+    border-radius: 25vh;
+    background-color: white;
+    color: #0f6972;
+    border: 1px solid #18808C;
+    
+  }
+
+  .export:hover{
+    background-color: #18808C;
+    color: white;
+  }
+
+  .export:disabled{
+    color: rgb(231, 231, 231);
+    background-color: #788b8d;
+  }
 
   h2{
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 600;
+    font-weight: 700;
     font-style: normal;
     margin: 0;
     padding: 0;
@@ -482,13 +613,14 @@
   h3{
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 300;
+    font-weight: 600;
     font-style: normal;
+    color:#18808C;
   }
 
   .delete{
     border: 0px;
-    background-color: #EBF4F6;
+    background-color: #fff;
   }
 
   .input{
@@ -503,7 +635,7 @@
 
   .input-food{
     margin-bottom: 10px;
-    width: 280px;
+    width: 190px;
     height: 20px;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -511,7 +643,16 @@
     font-style: normal;
   }
 
-
+  .glucose-labels {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 10px;
+  }
+  .glucose-labels span {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 72px;;
+  }
   .time{
     margin-bottom: 10px;
     width: 100px;
@@ -527,6 +668,10 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box;
-    background-color: #EBF4F6;
+    background-color: #ffffff;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
   }
 </style>
