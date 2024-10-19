@@ -59,12 +59,12 @@
 <style>  
 
   .ai-research{
-    max-height: 700px;
+    max-height: 1500px;
     overflow: hidden;
 }
 
   .gemini-wrapper{
-    max-height: 500px;
+    max-height: 1000px;
     overflow-y: auto;
     /* overflow: hidden; */
     height: 100%;
