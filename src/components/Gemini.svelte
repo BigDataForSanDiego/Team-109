@@ -97,7 +97,10 @@
 
   .title{
     margin-top: 0;
-    /* padding: 0; */
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
   }
 
 
