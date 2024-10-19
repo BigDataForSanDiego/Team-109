@@ -19,7 +19,7 @@ Our app’s principal features include:
 3. Easy access to a history of logged daily journal records at a calendar’s view 
 
 ### Deliverables
-We implement these features through our <a href= "https://dailyglucosejournal.netlify.app/"> website</a>, coded in HTML, CSS, and the JavaScript web framework Svelte. We made use of Google’s Gemini API to power supplementary AI information within daily journal entries. For more insight into our app and its features feel free to check out our 20+ screen interactive prototype designed in <a href= "https://dailyglucosejournal.netlify.app/"> Figma</a>. 
+We implement these features through our <a href= "https://dailyglucosejournal.netlify.app/"> website</a>, coded in HTML, CSS, and the JavaScript web framework Svelte. We made use of Google’s Gemini API to power supplementary AI information within daily journal entries. For more insight into our app and its features feel free to check out our 20+ screen interactive prototype designed in <a href= "https://www.figma.com/proto/D13s6Hjw4maD0HI3U2zQPv/Project?node-id=129-179&node-type=frame&t=0Rr8QU4YqYEHmrpO-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=129%3A179/"> Figma</a>. 
 
 ### Sources 
 We utilized the following sources when researching diabetes, blood sugar levels, monitoring, and more:
@@ -27,7 +27,6 @@ We utilized the following sources when researching diabetes, blood sugar levels,
 - <a href= "https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf"> https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf </a>
 - <a href= "https://www.sharp.com/health-news/what-you-need-to-know-about-diabetes"> https://www.sandiegocounty.gov/content/dam/sdc/hhsa/programs/phs/CHS/3-4-50_NorthInland_Brief%202024.pdf</a>
 - <a href= "https://medlineplus.gov/bloodglucose.html"> https://medlineplus.gov/bloodglucose.html</a>
-- <a href= "https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html"> https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html</a>
 - <a href= "https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html"> https://www.cdc.gov/diabetes/caring/steps-to-help-you-stay-healthy-with-diabetes.html</a>
 - <a href= "https://reports.mysidewalk.com/a664f35049"> https://reports.mysidewalk.com/a664f35049</a>
 
