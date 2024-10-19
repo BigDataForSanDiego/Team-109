@@ -13,16 +13,16 @@
             <p>{@html error}</p>
             {:else if data}
             <tr style="--index: 1">
-                {#if data["Blood Glucose"] != "Not related. <br>"}
+                {#if data["Blood Glucose"] && data["Blood Glucose"] != "Not related. <br>"}
                 <td id="response-box">
-                        <ResponseBox>
-                            <span slot="response">{@html data["Blood Glucose"]}</span>
-                        </ResponseBox>
+                    <ResponseBox>
+                        <span slot="response">{@html data["Blood Glucose"]}</span>
+                    </ResponseBox>
                 </td>
                 {/if}
             </tr>
             <tr style="--index: 2">
-                {#if data["Diet Tracker"] != "Not related. <br>"}
+                {#if data["Diet Tracker"]  && data["Diet Tracker"] != "Not related. <br>"}
                 <td id="response-box">
                     <ResponseBox>
                         <span slot="response">{@html data["Diet Tracker"]}</span>
@@ -31,7 +31,7 @@
                 {/if}
             </tr>
             <tr style="--index: 3">
-                {#if data["Symptoms"] != "Not related. <br>"}
+                {#if data["Symptoms"] && data["Symptoms"] != "Not related. <br>"}
                 <td id="response-box">
                     <ResponseBox>
                         <span slot="response">{@html data["Symptoms"]}</span>
@@ -39,7 +39,7 @@
                 </td>
                 {/if}
             </tr>
-            {#if data["Additional notes"] != "Not related. <br>" && prompt != ""}
+            {#if data["Additional notes"] && data["Additional notes"] != "Not related. <br>" && prompt != ""}
                 <tr style="--index: 4">
                 <td id="response-box">
                         <ResponseBox>
@@ -54,9 +54,6 @@
         </div>
         <div id="subtitle">This is meant to be purely informative. AI can make mistakes. Please check with your doctor always.</div>
     </div>
-    <!-- <div id="subtitle-container">
-    <div id="subtitle">This is meant to be purely informative. AI can make mistakes. Please check with your doctor always.</div> -->
-    <!-- </div> -->
 </main>
   
 <style>  

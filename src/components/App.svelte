@@ -11,7 +11,9 @@
   let selectedDate = new Date();
   let currentDate = new Date().toLocaleDateString();
   let isDisabled = false;
-  let prompt = "";
+  let symptoms = "";
+  let foods = "";
+  let readings = "";
 
   // Default data structure for user inputs
   let journalData = {
@@ -36,8 +38,8 @@
     
     setTimeout(() => {
         isDisabled = false;
+        isEditing = true;
     }, 10_000)
-    console.log(journalData);
   }
   // Function to toggle edit mode
   function toggleEdit() {
@@ -50,10 +52,22 @@
       level: ''
     };
     journalData.bloodGlucose.push(newRecord);
+    journalData.bloodGlucose = journalData.bloodGlucose
+  }
+  // Function to delete blood glucose record
+    function deleteBloodGlucoseRecord(index) {
+    journalData.bloodGlucose.splice(index, 1);
+    journalData.bloodGlucose = journalData.bloodGlucose;
   }
   // Function to add nutrition record
   function addNutritionRecord() {
     journalData.nutrition.push('');
+    journalData.nutrition = journalData.nutrition;
+  }
+  // Function to delete nutrition record
+  function deleteNutritionRecord(index) {
+    journalData.nutrition.splice(index, 1);
+    journalData.nutrition = journalData.nutrition;
   }
   // Function to toggle symptom status
   function toggleSymptom(symptom) {
@@ -67,16 +81,26 @@
   
   async function loadData() {
     try {
+        symptoms = Object.keys(journalData.symptoms).filter(key => journalData.symptoms[key]).join(', ');
+        foods = journalData.nutrition.join(', ');
+        readings = journalData.bloodGlucose.map(item => `${item.level} mg/dl`).join(', ');
         loading = true;
-        data["Blood Glucose"] = transformTextToHtml(await run("What are standard blood glucose ranges?"));
-        // data = await run("what uppp. If response is not related to blood glucose or informative, then respond with the word 'No.' else 1 sentence response that is specific, please");
-        // data["Diet Tracker"] = transformTextToHtml(await run("Heres a list of food I ate in 1 serving: skittles, kale, cereal, ice cream. How will this list of food change my blood glucose. If more info is needed on type of food, then explicitly say that"));
-        // data["Symptoms"] = transformTextToHtml(await run("I just ate lunch and am 80 yrs old. I have 150 mg/dL. is insomnia a symptom of blood glucose"));
-        data["Diet Tracker"] = transformTextToHtml(await run("Heres a list of food I ate in 1 serving: skittles, kale, cereal, ice cream. If more info is needed on type of food, then explicitly say that."));
-        data["Symptoms"] = transformTextToHtml(await run("Is insomnia a symptom of blood glucose."));
-        // data["Additional notes"] = transformTextToHtml(await run("given additional notes: 'feeling ill. ate too much. excercise for 1 hours'.how this will impact blood sugar"));
-        // data = transformTextToHtml(await run("Heres a list of food I ate in 1 serving: skittles, kale, cereal, ice cream. How will this list of food change my blood glucose. If more info is needed on type of food, then explicitly say that. given additional notes: 'feeling ill. ate too much. excercise for 1 hours'.how this will impact blood sugar. I just ate lunch and am 80 yrs old. I have 150 mg/dL. is insomnia a symptom of blood glucose"));
-        data["Additional notes"] = transformTextToHtml(await run(prompt));
+        data = {};
+
+        // Blood Glucose
+        data["Blood Glucose"] = transformTextToHtml(await run(`Is having blood glucose levels of ${readings} within normal range for an individual of 5'2, 120lbs, and 21`));
+        // Diet
+        if (typeof foods === 'string' && foods.length > 0){
+          data["Diet Tracker"] = transformTextToHtml(await run(`Heres a list of food I ate in 1 serving: ${foods}. If more info is needed on type of food, then explicitly say that.`));
+        }
+        // Symptoms
+        if (typeof symptoms === 'string' && symptoms.length > 0){
+          data["Symptoms"] = transformTextToHtml(await run(`Here is a list of symptoms i have: ${symptoms}. How do these relate to blood glucose?`));
+        }
+        // Additional notes
+        if (typeof data["Additional notes"] === 'string' && data["Additional notes"].length > 0){
+          data["Additional notes"] = transformTextToHtml(await run(journalData.additionalNotes));
+        }
       } catch (err) {
         error = "Responses are currently unavailable. <br/> Please try again later :(";
         console.log(err)
@@ -106,7 +130,6 @@
           <!-- Blood Glucose Subsection -->
           <div class="subsection">
             <h3>Blood Glucose</h3>
-            <button on:click={addBloodGlucoseRecord} disabled={!isEditing}>Add Record</button>
             {#each journalData.bloodGlucose as record, index}
               <div class="record">
                 <input
@@ -116,20 +139,21 @@
                 />
                 <input
                   type="number"
+                  min="0"
                   bind:value={record.level}
                   placeholder="Blood glucose level (mg/dL)"
                   disabled={!isEditing}
                 />
                 {#if isEditing}
-                  <button on:click={() => journalData.bloodGlucose.splice(index, 1)}>Delete</button>
+                  <button on:click={() => deleteBloodGlucoseRecord(index)}>Delete</button>
                 {/if}
               </div>
             {/each}
+            <button on:click={addBloodGlucoseRecord} disabled={!isEditing}>+</button>
           </div>
           <!-- Nutrition Tracker Subsection -->
           <div class="subsection">
             <h3>Nutrition Tracker</h3>
-            <button on:click={addNutritionRecord} disabled={!isEditing}>Add Record</button>
             {#each journalData.nutrition as food, index}
               <div class="record">
                 <input
@@ -139,10 +163,11 @@
                   disabled={!isEditing}
                 />
                 {#if isEditing}
-                  <button on:click={() => journalData.nutrition.splice(index, 1)}>Delete</button>
+                  <button on:click={() => deleteNutritionRecord(index)}>Delete</button>
                 {/if}
               </div>
             {/each}
+            <button on:click={addNutritionRecord} disabled={!isEditing}>+</button>
           </div>
     
           <!-- Symptoms Subsection -->
@@ -222,7 +247,7 @@
 
   .main-content-wrapper{
     padding: 20px;
-    padding-top: 95px;
+    padding-top: 85px;
     margin-left: 2%;
     margin-right: 2%;
   }
