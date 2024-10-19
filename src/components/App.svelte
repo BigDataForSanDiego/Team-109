@@ -536,10 +536,12 @@
     .symptom-icon {
       width: 40px;
       font-size: x-small;
+      text-align: center;
     }
     .day {
       width: 25px;
       height: 25px;
+      text-align: center;
       line-height: 25px;
     }
   }
