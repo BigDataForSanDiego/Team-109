@@ -348,6 +348,10 @@
               {#each ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as day, index}
                 <button class="day-titles">{day}</button>
               {/each}
+              {#each [29,30] as day, index}
+                <button class="past-month"></button>
+              {/each}
+
             
               <!-- Calendar days -->
               {#each renderCalendar() as day}
@@ -371,8 +375,8 @@
 
 <style>
   .content{
-    margin-left: 5%;
-    margin-right: 5%;
+    /* margin-left: 5%;
+    margin-right: 5%; */
     background-color: white;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -517,6 +521,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
+    text-align: center;
   }
 
   @media (max-width: 600px) {
@@ -527,7 +532,17 @@
       background-color: #EBF4F6; /* Change background to blue */
     }
   }
-
+  @media (max-width: 500px) {
+    .symptom-icon {
+      width: 40px;
+      font-size: x-small;
+    }
+    .day {
+      width: 25px;
+      height: 25px;
+      line-height: 25px;
+    }
+  }
   .symptom-icon {
     padding: 10px;
     border: 0px solid #007bff;
@@ -536,6 +551,9 @@
     cursor: pointer;
     background-color: #fff;
     /* max-width: 100px; */
+  }
+  .symptom-icon span {
+    text-align: center;
   }
   /* .symptom-icon.active {
     background-color:#EBF4F6;
@@ -662,8 +680,11 @@
     font-weight: 300;
     font-style: normal;
   }
-
-
+  .past-month {
+    border: 0px;
+    background-color: transparent;
+    color: transparent;
+  }
   :global(body) {
     margin: 0; 
     padding: 0; 

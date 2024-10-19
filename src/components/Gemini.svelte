@@ -5,7 +5,7 @@
   
 <main>  
     <div class="ai-research"> 
-        <h2>AI-Powered Research</h2>
+        <h2>AI-Powered Research</h2><br>
         <div class="gemini-wrapper">
             {#if loading}
                 Loading...
