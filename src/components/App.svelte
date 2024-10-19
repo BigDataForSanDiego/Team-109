@@ -506,7 +506,7 @@
   .gemini-section {
     padding: 20px;
     background-color: #EBF4F6;
-    height: 500px;
+    height: 1000px;
     margin-bottom: 10px;
     border-radius: 10px;
   }
