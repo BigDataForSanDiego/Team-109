@@ -10,7 +10,6 @@
     section{
 		width: auto;
         height: auto;
-        /* max-height: 145px; */
 		display: grid;
 		padding-left: 11px;
 		margin-right: 11px;

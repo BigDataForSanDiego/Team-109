@@ -132,10 +132,10 @@
   
   @media (min-width: 650px) {
     .grid-container {
-      /* display: grid;
+      display: grid;
       grid-template-columns: auto auto auto;
       gap: 10px;
-      padding: 0px; */
+      padding: 0px;
     }
   }
 
